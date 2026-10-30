@@ -1,0 +1,73 @@
+<div class="page-heading">
+  <div>
+    <h1>Profile</h1>
+  </div>
+</div>
+<div class="detail-grid">
+  <section>
+    <div class="panel">
+      <div class="profile-card">
+        <span class="avatar large">{{person.initials}}</span>
+        <div>
+          <h2 style="margin-bottom: 6px">{{person.name}}</h2>
+          <span class="small muted">{{person.id}}</span>
+          <div style="margin-top: 10px">
+            <span class="badge success">{{person.label}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="panel space-top">
+      <a class="menu-link" [routerLink]="['/',role,'committees']"
+        ><ion-icon name="people-outline" />Committees<ion-icon
+          name="chevron-forward-outline" /></a
+      ><a class="menu-link" [routerLink]="['/',role,'attendance']"
+        ><ion-icon name="calendar-outline" />Attendance history<ion-icon
+          name="chevron-forward-outline" /></a
+      ><a class="menu-link" [routerLink]="['/',role,'sync']"
+        ><ion-icon name="sync-outline" />{{role==='admin'?'Review & activity'
+        :'Sync'}}<ion-icon name="chevron-forward-outline" /></a
+      >@if(role!=='member'){<a
+        class="menu-link"
+        [routerLink]="['/',role,'reports']"
+        ><ion-icon name="bar-chart-outline" />Reports<ion-icon
+          name="chevron-forward-outline" /></a
+      >}@if(role==='admin'){<a
+        class="menu-link"
+        [routerLink]="['/',role,'accounts']"
+        ><ion-icon name="people-outline" />Account management<ion-icon
+          name="chevron-forward-outline" /></a
+      >}
+    </div>
+    <a class="btn secondary block space-top" routerLink="/welcome"
+      ><ion-icon name="log-out-outline" />Switch workspace</a
+    >
+  </section>
+  <aside>
+    <div class="panel">
+      <h2>About</h2>
+      <details class="help-details">
+        <summary>Is sign-in available?</summary>
+        <p>
+          Not yet. Choose a workspace from the opening screen.
+        </p>
+      </details>
+      <details class="help-details">
+        <summary>Are changes saved?</summary>
+        <p>Only example data is shown. Changes are not saved.</p>
+      </details>
+      <details class="help-details">
+        <summary>Are camera and sync available?</summary>
+        <p>
+          Not yet.
+        </p>
+      </details>
+      <details class="help-details">
+        <summary>Are reports available?</summary>
+        <p>
+          Not yet.
+        </p>
+      </details>
+    </div>
+  </aside>
+</div>

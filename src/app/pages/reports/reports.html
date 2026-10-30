@@ -1,0 +1,112 @@
+<div class="page-heading">
+  <div>
+    <h1>Progress, made visible.</h1>
+  </div>
+</div>
+<div class="panel">
+  <div class="form-grid">
+    <label class="field"
+      ><span>Committee</span
+      ><select aria-label="Select committee">
+        <option>All committees</option>
+        <option>Events & Logistics</option>
+        <option>Creatives & Media</option>
+      </select></label
+    >
+    <div class="form-grid">
+      <label class="field"
+        ><span>From · Manila date</span
+        ><input type="date" value="2026-10-01" /></label
+      ><label class="field"
+        ><span>To · Manila date</span><input type="date" value="2026-10-31"
+      /></label>
+    </div>
+  </div>
+  <div class="form-actions" style="margin-top: 0">
+    <button class="btn secondary" (click)="dialog='Export CSV'">
+      <ion-icon name="download-outline" />CSV</button
+    ><button class="btn" (click)="dialog='Export PDF'">
+      <ion-icon name="document-text-outline" />Export PDF
+    </button>
+  </div>
+</div>
+<div class="info-note">
+  <ion-icon name="information-circle-outline" />Reports and exports are not
+  available yet.
+</div>
+<div class="section-title">
+  <h2>Tasks by progress</h2>
+</div>
+<div class="stats">
+  <div class="stat">
+    <span class="stat-top">Pending</span><strong>01</strong>
+  </div>
+  <div class="stat">
+    <span class="stat-top">Ongoing</span><strong>02</strong>
+  </div>
+  <div class="stat">
+    <span class="stat-top">Done</span><strong>04</strong
+    ><small>Includes awaiting review</small>
+  </div>
+  <div class="stat">
+    <span class="stat-top">Approved</span><strong>01</strong
+    ><small>Review accepted</small>
+  </div>
+</div>
+<div class="section-title">
+  <h2>Committee completion</h2>
+</div>
+<div class="panel">
+  <div class="list-row">
+    <strong>Events & Logistics</strong><span class="badge">60%</span>
+  </div>
+  <div class="report-bar"><span style="width: 60%"></span></div>
+  <div class="list-row">
+    <strong>Creatives & Media</strong><span class="badge purple">40%</span>
+  </div>
+  <div class="report-bar">
+    <span style="width: 40%; background: #9b8cbb"></span>
+  </div>
+</div>
+<div class="section-title"><h2>Event attendance</h2></div>
+<div class="panel">
+  <div class="table-wrap">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Event</th>
+          <th>Expected</th>
+          <th>Recorded</th>
+          <th>QR / Manual</th>
+          <th>Rate</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <strong>Committee coordination session</strong><br /><small
+              class="muted"
+              >Events & Logistics</small
+            >
+          </td>
+          <td>5</td>
+          <td>3</td>
+          <td>2 / 1</td>
+          <td>60%</td>
+        </tr>
+        <tr>
+          <td>
+            <strong>Media planning workshop</strong><br /><small class="muted"
+              >Creatives & Media</small
+            >
+          </td>
+          <td>5</td>
+          <td>2</td>
+          <td>1 / 1</td>
+          <td>40%</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<app-preview-dialog [title]="dialog" (closed)="dialog=''" />

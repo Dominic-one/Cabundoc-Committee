@@ -1,0 +1,38 @@
+<div class="page-heading">
+  <div>
+    <h1>{{ role === "member" ? "My tasks" : "Committee tasks" }}</h1>
+    <p>A clear next step for every piece of work.</p>
+  </div>
+  @if (role === "head") {
+  <a class="btn" [routerLink]="['/', role, 'tasks', 'new']"
+    ><ion-icon name="add-outline" />Assign task</a
+  >
+  }
+</div>
+<ion-segment value="All">
+  @for (s of ["All", "Pending", "Ongoing", "Done"]; track s) {
+  <ion-segment-button [value]="s"
+    ><ion-label>{{ s }}</ion-label></ion-segment-button
+  >
+  }
+</ion-segment>
+<div class="filters">
+  <ion-searchbar
+    placeholder="Search tasks"
+    aria-label="Search tasks"
+  /><select aria-label="Filter by committee">
+    <option>All committees</option>
+    <option>Events & Logistics</option>
+    <option>Creatives & Media</option></select
+  ><select aria-label="Filter by review status">
+    <option>All review states</option>
+    <option>Awaiting review</option>
+    <option>Approved</option>
+    <option>Returned</option>
+  </select>
+</div>
+<div class="task-list">
+  @for (task of tasks; track task.id) {
+  <app-task-card [task]="task" [role]="role" />
+  }
+</div>

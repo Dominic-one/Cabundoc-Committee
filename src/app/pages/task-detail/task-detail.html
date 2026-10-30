@@ -1,0 +1,138 @@
+<a class="back-link" [routerLink]="['/',role,'tasks']"
+  ><ion-icon name="arrow-back-outline" />Back to tasks</a
+>
+<div class="detail-grid">
+  <div>
+    <section class="panel">
+      <span class="eyebrow">{{task.committee}}</span>
+      <h1 class="detail-title">{{task.title}}</h1>
+      <div class="task-flags">
+        <span class="badge">{{task.progress}}</span
+        ><span
+          class="badge"
+          [class.success]="task.review==='Approved'"
+          [class.warning]="task.review==='Returned'||task.review==='Awaiting review'"
+          >{{task.review}}</span
+        >
+      </div>
+      <dl class="metadata">
+        <div>
+          <dt>ASSIGNED TO</dt>
+          <dd>{{task.assignee}}</dd>
+        </div>
+        <div>
+          <dt>DUE DATE · MANILA</dt>
+          <dd>{{task.date}}</dd>
+        </div>
+        <div>
+          <dt>ASSIGNED BY</dt>
+          <dd>Jamie Santos</dd>
+        </div>
+        <div>
+          <dt>RECORD TYPE</dt>
+          <dd>Task</dd>
+        </div>
+      </dl>
+      @if(task.review==='Returned'){
+      <div class="info-note warning">
+        <ion-icon name="chatbubble-ellipses-outline" />
+        <div>
+          <strong>A little feedback from your head</strong><br />Please include
+          the updated registration count in your photo.
+        </div>
+      </div>
+      }@if(role==='member'&&task.progress==='Pending'){<button
+        class="btn"
+        (click)="dialog='Start task'"
+      >
+        Start working<ion-icon name="arrow-forward-outline" /></button
+      >}
+    </section>
+    <section class="panel space-top">
+      <div class="section-title" style="margin-top: 0">
+        <h2>Photo proof</h2>
+        <span class="small muted">1 photo per task</span>
+      </div>
+      @if(task.proof){<img
+        class="proof-image"
+        src="assets/proof-preview.svg"
+        alt="Task completion proof"
+      />}@else{
+      <p>No proof submitted.</p>
+      }@if(role==='member'&&task.progress!=='Done'){<button
+        class="upload space-top"
+        style="width: 100%"
+        (click)="dialog='Photo upload'"
+      >
+        <ion-icon name="camera-outline" /><strong
+          >Add your completion photo</strong
+        >        <span>Photo uploads are not available yet.</span>
+      </button>
+      <div class="form-actions">
+        <button class="btn" (click)="dialog='Task submission'">
+          Submit for review<ion-icon name="arrow-forward-outline" />
+        </button>
+      </div>
+      }@if(task.review==='Awaiting review'){
+      <div class="info-note">
+        <ion-icon name="time-outline" />Proof submitted and awaiting review.
+      </div>
+      }@if(task.review==='Approved'){
+      <div class="info-note">
+        <ion-icon name="checkmark-circle-outline" />Task approved.
+      </div>
+      }
+    </section>
+  </div>
+  <aside>
+    <section class="panel">
+      <h2>Where things stand</h2>
+      <div class="timeline">
+        <div class="timeline-row">
+          Assigned<small>A clear task and due date</small>
+        </div>
+        <div class="timeline-row">
+          {{task.progress}}
+        </div>
+        <div class="timeline-row">
+          {{task.review}}
+        </div>
+      </div>
+    </section>
+    @if(role==='head'&&task.review==='Awaiting review'){
+    <section class="panel space-top">
+      <h2>Review this submission</h2>
+      <button class="btn block" (click)="dialog='Approve task'">
+        Approve task<ion-icon name="checkmark-outline" /></button
+      ><button class="btn secondary block space-top" (click)="feedback=true">
+        Return with feedback
+      </button>
+    </section>
+    }@if(role==='admin'){
+    <div class="info-note">
+      <ion-icon name="eye-outline" />Administrator view. Review controls are
+      unavailable.
+    </div>
+    }
+  </aside>
+</div>
+<ion-modal [isOpen]="feedback" (didDismiss)="feedback=false"
+  ><ng-template
+    ><div class="modal-body">
+      <h2>A clear next step.</h2>
+      <label class="field"
+        ><span>Return reason</span
+        ><textarea placeholder="Please update…"></textarea>
+      </label>
+      <div class="form-actions">
+        <button class="btn secondary" (click)="feedback=false">Cancel</button
+        ><button
+          class="btn"
+          (click)="feedback=false;dialog='Return task'"
+        >
+          Return task
+        </button>
+      </div>
+    </div></ng-template
+  ></ion-modal
+><app-preview-dialog [title]="dialog" (closed)="dialog=''" />

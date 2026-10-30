@@ -1,0 +1,67 @@
+<div class="page-heading">
+  <div>
+    <h1>
+      {{ role === "member" ? "Every time you showed up." : "Attendance records"
+      }}
+    </h1>
+    <p>
+      {{ role === "member" ? "Your attendance history." : "Committee attendance records." }}
+    </p>
+  </div>
+  @if (role === "member") {
+  <a class="btn" [routerLink]="['/', role, 'scan']"
+    ><ion-icon name="scan-outline" />Scan QR</a
+  >
+  }
+</div>
+<div class="filters">
+  <ion-searchbar
+    placeholder="Search events"
+    aria-label="Search attendance"
+  /><select aria-label="Filter by method">
+    <option>All methods</option>
+    <option>QR scans</option>
+    <option>Manual entries</option>
+  </select>
+</div>
+<div class="panel">
+  <div class="table-wrap">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Event / committee</th>
+          @if (role !== "member") {
+          <th>Member</th>
+          }
+          <th>Time-in · Manila</th>
+          <th>Method</th>
+          <th>Record state</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (a of rows; track a.time) {
+        <tr>
+          <td>
+            <strong>{{ a.event }}</strong><br /><small class="muted"
+              >{{ a.committee }}</small
+            >
+          </td>
+          @if (role !== "member") {
+          <td>{{ a.name }}</td>
+          }
+          <td>{{ a.time }}</td>
+          <td>
+            <span class="badge" [class.warning]="a.method === 'Manual'"
+              >{{ a.method }}</span
+            >
+            @if (a.method === "Manual") {
+            <br /><small class="muted">By {{ a.enteredBy }}</small>
+            }
+          </td>
+          <td><span class="badge success">Recorded</span></td>
+        </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>

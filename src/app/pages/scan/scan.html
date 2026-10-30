@@ -1,0 +1,51 @@
+<div class="page-heading">
+  <div>
+    <h1>A quick scan. You're in.</h1>
+  </div>
+</div>
+<div class="detail-grid">
+  <section class="panel">
+    <div class="scan-stage">
+      <div class="scan-frame"><ion-icon name="scan-outline" /></div>
+      <span class="scanner-caption">CAMERA</span>
+    </div>
+    <p style="text-align: center">Hold the event QR inside the frame.</p>
+    <button class="btn block" (click)="dialog = 'QR scanner'">
+      <ion-icon name="camera-outline" />Scan QR
+    </button>
+    <div class="info-note">
+      <ion-icon name="information-circle-outline" />Camera scanning is not
+      available yet.
+    </div>
+    <a class="text-link" [routerLink]="['/', role, 'attendance']"
+      >View attendance<ion-icon name="arrow-forward-outline"
+    /></a>
+  </section>
+  <aside>
+    <div class="panel">
+      <h2>Before you scan</h2>
+      <div class="timeline">
+        <div class="timeline-row">
+          Use your own account
+        </div>
+        <div class="timeline-row">
+          Check the time window
+        </div>
+        <div class="timeline-row">
+          Look for confirmation
+        </div>
+      </div>
+    </div>
+    <div class="panel space-top">
+      <h2>Result preview</h2>
+      <div class="scan-result" style="margin-bottom: 0">
+        <ion-icon name="checkmark-circle-outline" />
+        <h2>Time-in recorded.</h2>
+        <p>Committee coordination session</p>
+        <span class="badge success">ILLUSTRATIVE SUCCESS STATE</span>
+        <p class="small muted">Alex Rivera · 2026-001</p>
+      </div>
+    </div>
+  </aside>
+</div>
+<app-preview-dialog [title]="dialog" (closed)="dialog = ''" />

@@ -1,0 +1,7 @@
+node_modules/
+.angular/
+www/
+out-tsc/
+android/
+.DS_Store
+*.log

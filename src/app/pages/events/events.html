@@ -1,0 +1,78 @@
+<div class="page-heading">
+  <div>
+    <h1>Good things, coming up.</h1>
+    <p>Your committee events and attendance, in one place.</p>
+  </div>
+  @if(role==='head'){<button class="btn" (click)="form=true">
+    <ion-icon name="add-outline" />New event</button
+  >}
+</div>
+<div class="filters">
+  <ion-searchbar
+    placeholder="Search events"
+    aria-label="Search events"
+  /><select aria-label="Filter by committee">
+    <option>All committees</option>
+    <option>Events & Logistics</option>
+    <option>Creatives & Media</option>
+  </select>
+</div>
+<div class="card-grid">
+  @for(e of events;track e.id){<a
+    class="committee-card"
+    [routerLink]="['/',role,'events',e.id]"
+    ><div
+      style="
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        margin-bottom: 18px;
+      "
+    >
+      <div class="committee-icon" style="margin: 0">
+        <ion-icon name="calendar-outline" />
+      </div>
+      <span class="badge" [class.success]="e.status==='Open now'"
+        >{{e.status}}</span
+      >
+    </div>
+    <span class="eyebrow">{{e.committee}}</span>
+    <h2 style="margin-top: 10px">{{e.title}}</h2>
+    <p>{{e.date}}<br />{{e.time}} · Manila</p>
+    <footer>
+      <span>Attendance</span
+      ><ion-icon name="arrow-forward-outline" /></footer></a
+  >}
+</div>
+<ion-modal [isOpen]="form" (didDismiss)="form=false"
+  ><ng-template
+    ><div class="modal-body">
+      <h2>Bring the team together.</h2>
+      <label class="field"
+        ><span>Event title</span
+        ><input placeholder="e.g. Committee planning session" /></label
+      ><label class="field"
+        ><span>Committee</span
+        ><select aria-label="Event committee">
+          <option>Events & Logistics</option>
+          <option>Creatives & Media</option>
+        </select></label
+      ><label class="field"
+        ><span>Attendance opens · Manila</span
+        ><input type="datetime-local" value="2026-10-29T09:00" /></label
+      ><label class="field"
+        ><span>Attendance closes · Manila</span
+        ><input type="datetime-local" value="2026-10-29T12:00"
+      /></label>
+      <div class="form-actions">
+        <button class="btn secondary" (click)="form=false">Cancel</button
+        ><button
+          class="btn"
+          (click)="form=false;dialog='Create event'"
+        >
+          Create event
+        </button>
+      </div>
+    </div></ng-template
+  ></ion-modal
+><app-preview-dialog [title]="dialog" (closed)="dialog=''" />

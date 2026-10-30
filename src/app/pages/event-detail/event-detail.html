@@ -1,0 +1,100 @@
+<a class="back-link" [routerLink]="['/',role,'events']"
+  ><ion-icon name="arrow-back-outline" />Back to events</a
+>
+<div class="page-heading">
+  <div>
+    <span class="eyebrow">{{event.committee}}</span>
+    <h1 style="margin-top: 10px">{{event.title}}</h1>
+    <p>{{event.date}} · {{event.time}} · Manila</p>
+  </div>
+  <span class="badge" [class.success]="event.status==='Open now'"
+    >{{event.status}}</span
+  >
+</div>
+<div class="detail-grid">
+  <section>
+    <div
+      class="stats"
+      style="grid-template-columns: repeat(3, 1fr); margin-top: 0"
+    >
+      <div class="stat">
+        <span class="stat-top">Expected</span><strong>05</strong
+        ><small>Members</small>
+      </div>
+      <div class="stat">
+        <span class="stat-top">Recorded</span><strong>03</strong
+        ><small>Time-ins</small>
+      </div>
+      <div class="stat">
+        <span class="stat-top">Attendance</span><strong>60%</strong
+        ><small>of members</small>
+      </div>
+    </div>
+    <div class="section-title">
+      <h2>Attendance records</h2>
+      @if(role==='head'){<button class="btn secondary" (click)="manual=true">
+        <ion-icon name="person-add-outline" />Manual entry</button
+      >}
+    </div>
+    <div class="panel">
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Member</th>
+              <th>Time-in · Manila</th>
+              <th>Method</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for(a of rows;track a.id){
+            <tr>
+              <td>
+                <strong>{{a.name}}</strong><br /><small class="muted"
+                  >{{a.id}}</small
+                >
+              </td>
+              <td>{{a.time}}</td>
+              <td>
+                <span class="badge" [class.warning]="a.method==='Manual'"
+                  >{{a.method}}</span
+                ><br /><small class="muted">By {{a.enteredBy}}</small>
+              </td>
+            </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+  <aside class="panel qr-card">
+    <span class="eyebrow">ATTENDANCE QR</span>
+    <h2 style="margin-top: 12px">A quick scan. You're in.</h2>
+    <p>QR attendance is not available yet.</p>
+  </aside>
+</div>
+<ion-modal [isOpen]="manual" (didDismiss)="manual=false"
+  ><ng-template
+    ><div class="modal-body">
+      <h2>Record attendance manually.</h2>
+      <p>Member lookup is not available yet.</p>
+      <label class="field"
+        ><span>Member institutional ID</span><input placeholder="e.g. 2026-004"
+      /></label>
+      <div class="info-note">
+        <ion-icon name="person-outline" /><span
+          ><strong>Riley Garcia</strong><br />2026-004</span
+        >
+      </div>
+      <div class="form-actions">
+        <button class="btn secondary" (click)="manual=false">Cancel</button
+        ><button
+          class="btn"
+          (click)="manual=false;dialog='Manual attendance'"
+        >
+          Record attendance
+        </button>
+      </div>
+    </div></ng-template
+  ></ion-modal
+><app-preview-dialog [title]="dialog" (closed)="dialog=''" />

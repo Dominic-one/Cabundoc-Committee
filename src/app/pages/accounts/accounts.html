@@ -1,0 +1,88 @@
+<div class="page-heading">
+  <div>
+    <h1>Accounts</h1>
+  </div>
+  <button class="btn" (click)="form=true">
+    <ion-icon name="add-outline" />Create account
+  </button>
+</div>
+<div class="filters">
+  <ion-searchbar
+    placeholder="Search accounts"
+    aria-label="Search accounts"
+  /><select aria-label="Filter by role">
+    <option>All roles</option>
+    <option>Members</option>
+    <option>Heads</option>
+    <option>Administrators</option>
+  </select>
+</div>
+<div class="panel">
+  <div class="table-wrap">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Person</th>
+          <th>Role</th>
+          <th>Account state</th>
+          <th>Memberships</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for(u of accounts;track u.id){
+        <tr>
+          <td>
+            <div class="person-cell">
+              <span class="avatar">{{u.name.slice(0,1)}}</span>
+              <div><strong>{{u.name}}</strong><small>{{u.id}}</small></div>
+            </div>
+          </td>
+          <td>{{u.role}}</td>
+          <td><span class="badge success">Active</span></td>
+          <td>{{u.memberships}}</td>
+          <td>
+            <button
+              class="btn secondary"
+              (click)="dialog='Edit account'"
+            >
+              Edit
+            </button>
+          </td>
+        </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>
+<ion-modal [isOpen]="form" (didDismiss)="form=false"
+  ><ng-template
+    ><div class="modal-body">
+      <h2>A new teammate.</h2>
+      <label class="field"
+        ><span>Full name</span><input placeholder="Enter a name" /></label
+      ><label class="field"
+        ><span>Institutional ID</span
+        ><input placeholder="e.g. 2026-099" /></label
+      ><label class="field"
+        ><span>Access role</span
+        ><select aria-label="Select account role">
+          <option>Role 1 · Student / Alumni / OJT</option>
+          <option>Role 2 · Faculty / Head / OIC</option>
+          <option>Role 3 · Administrator web</option>
+        </select></label
+      ><label class="check-label"
+        ><input type="checkbox" checked />Account is active</label
+      >
+      <div class="form-actions">
+        <button class="btn secondary" (click)="form=false">Cancel</button
+        ><button
+          class="btn"
+          (click)="form=false;dialog='Create account'"
+        >
+          Create account
+        </button>
+      </div>
+    </div></ng-template
+  ></ion-modal
+><app-preview-dialog [title]="dialog" (closed)="dialog=''" />

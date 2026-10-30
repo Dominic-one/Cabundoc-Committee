@@ -1,0 +1,147 @@
+<div class="page-heading">
+  <div>
+    <h1>
+      {{role==='admin'?'The bigger picture.':'Hello, '+person.name.split('
+      ')[0]+'.'}}
+    </h1>
+    <p>
+      {{role==='member'?"Here's what's happening with your
+      committee.":role==='head'?'A little overview to keep your teams
+      moving.':'A clear view of committees, tasks, and events.'}}
+    </p>
+  </div>
+  <span class="badge success"
+    >{{role==='member'?'MEMBER':role==='head'?'COMMITTEE HEAD':'ADMIN
+    WEB'}}</span
+  >
+</div>
+<section class="hero">
+  <div>
+    <span class="eyebrow">SMALL STEPS. SHARED PROGRESS.</span>
+    <h2>
+      {{role==='member'?'Your next step makes a difference.':'Great things
+      happen when we work together.'}}
+    </h2>
+    <p>
+      {{role==='member'?'Pick up where you left off. Your committee is counting
+      on your ideas and a little follow-through.':'Review tasks and help your
+      team keep moving.'}}
+    </p>
+    <a
+      class="light-button"
+      [routerLink]="['/',role,role==='admin'?'reports':'tasks']"
+      >{{role==='member'?'View my tasks':role==='head'?'Review
+      submissions':'Explore reports'}}<ion-icon name="arrow-forward-outline"
+    /></a>
+  </div>
+  <div class="hero-art">
+    <svg viewBox="0 0 160 160" aria-hidden="true">
+      <circle
+        cx="80"
+        cy="80"
+        r="67"
+        fill="none"
+        stroke="#355b50"
+        stroke-width="8"
+      />
+      <circle
+        cx="80"
+        cy="80"
+        r="67"
+        fill="none"
+        stroke="#d4e6ae"
+        stroke-width="8"
+        stroke-linecap="round"
+        stroke-dasharray="105 421"
+      />
+    </svg>
+    <div><strong>25%</strong><span>Progress</span></div>
+  </div>
+</section>
+<section class="stats" aria-label="Task statistics">
+  <a class="stat" [routerLink]="['/',role,'tasks']"
+    ><span class="stat-top"
+      >Pending tasks<span class="stat-icon"
+        ><ion-icon name="time-outline" /></span></span
+    ><strong>01</strong><small>Ready to get started</small></a
+  ><a class="stat" [routerLink]="['/',role,'tasks']"
+    ><span class="stat-top"
+      >In progress<span class="stat-icon"
+        ><ion-icon name="pulse-outline" /></span></span
+    ><strong>02</strong><small>A little closer every day</small></a
+  ><a class="stat" [routerLink]="['/',role,'tasks']"
+    ><span class="stat-top"
+      >Awaiting review<span class="stat-icon"
+        ><ion-icon name="eye-outline" /></span></span
+    ><strong>{{role==='member'?'00':'03'}}</strong
+    ><small>Submitted for feedback</small></a
+  ><a class="stat" [routerLink]="['/',role,'tasks']"
+    ><span class="stat-top"
+      >Approved tasks<span class="stat-icon"
+        ><ion-icon name="checkmark-circle-outline" /></span></span
+    ><strong>01</strong><small>One more thing, done</small></a
+  >
+</section>
+<div class="columns">
+  <section>
+    <div class="section-title">
+      <h2>
+        {{role==='member'?'Your focus for today':'Tasks that need attention'}}
+      </h2>
+      <a class="text-link" [routerLink]="['/',role,'tasks']"
+        >View all<ion-icon name="arrow-forward-outline"
+      /></a>
+    </div>
+    <div class="task-list">
+      @for(task of tasks;track task.id){<app-task-card
+        [task]="task"
+        [role]="role"
+      />}
+    </div>
+    <div class="section-title"><h2>A quicker way</h2></div>
+    <div class="quick-actions">
+      <a
+        class="quick-action"
+        [routerLink]="role==='member'?['/',role,'scan']:role==='head'?['/',role,'tasks','new']:['/',role,'accounts']"
+        ><ion-icon
+          [name]="role==='member'?'scan-outline':role==='head'?'add-outline':'people-outline'"
+        />{{role==='member'?'Scan attendance':role==='head'?'Assign a
+        task':'Manage accounts'}}</a
+      ><a class="quick-action" [routerLink]="['/',role,'committees']"
+        ><ion-icon name="people-outline" />Your committees</a
+      ><a
+        class="quick-action"
+        [routerLink]="['/',role,role==='member'?'attendance':'reports']"
+        ><ion-icon name="bar-chart-outline" />{{role==='member'?'View
+        attendance':'Open reports'}}</a
+      >
+    </div>
+  </section>
+  <aside>
+    <div class="section-title">
+      <h2>On the calendar</h2>
+      <a
+        class="text-link"
+        [routerLink]="['/',role,role==='member'?'scan':'events']"
+        >View<ion-icon name="arrow-forward-outline"
+      /></a>
+    </div>
+    <div class="panel">
+      @for(event of events;track event.id){<a
+        class="event-mini"
+        [routerLink]="role==='member'?['/',role,'scan']:['/',role,'events',event.id]"
+        ><div class="date-tile">{{event.month}}<b>{{event.day}}</b></div>
+        <div>
+          <strong>{{event.title}}</strong><small>{{event.committee}}</small
+          ><small>{{event.time}} · Manila</small
+          ><span
+            class="badge"
+            [class.success]="event.status==='Open now'"
+            style="margin-top: 8px"
+            >{{event.status}}</span
+          >
+        </div></a
+      >}
+    </div>
+  </aside>
+</div>

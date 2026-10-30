@@ -1,0 +1,88 @@
+<div class="page-heading">
+  <div>
+    <h1>Your people. Shared purpose.</h1>
+    <p>The teams you work with, and the people who keep them moving.</p>
+  </div>
+  @if(role==='admin'){<button class="btn" (click)="creating=true">
+    <ion-icon name="add-outline" />Create committee</button
+  >}
+</div>
+<div class="card-grid">
+  @for(c of committees;track c.name){
+  <section class="committee-card">
+    <div class="committee-icon" [style.color]="c.color">
+      <ion-icon name="people-outline" />
+    </div>
+    <h2>{{c.name}}</h2>
+    <p>{{c.description}}</p>
+    <div class="person-cell space-top">
+      <span class="avatar">{{c.head.slice(0,1)}}</span>
+      <div><strong>{{c.head}}</strong><small>Committee head</small></div>
+    </div>
+    <footer>
+      <span>{{c.members}} members</span>@if(role==='head'){<button
+        class="text-link icon-button"
+        (click)="members=true"
+      >
+        Manage members<ion-icon name="arrow-forward-outline" /></button
+      >}@else{<span class="badge"
+        >{{role==='member'?'Member':'Committee'}}</span
+      >}
+    </footer>
+  </section>
+  }
+</div>
+<ion-modal [isOpen]="members" (didDismiss)="members=false"
+  ><ng-template
+    ><div class="modal-body">
+      <h2>Your committee members.</h2>
+      @for(name of ['Alex Rivera','Sam Flores','Casey Lim'];track name){
+      <div class="list-row">
+        <strong>{{name}}</strong><span class="badge success">Member</span>
+      </div>
+      }<label class="field"
+        ><span>Add an existing member</span
+        ><select aria-label="Select a member">
+          <option>Select a member</option>
+          <option>Riley Garcia</option>
+          <option>Jordan Tan</option>
+        </select></label
+      >
+      <div class="form-actions">
+        <button class="btn secondary" (click)="members=false">Close</button
+        ><button
+          class="btn"
+          (click)="members=false;dialog='Update membership'"
+        >
+          Save changes
+        </button>
+      </div>
+    </div></ng-template
+  ></ion-modal
+><ion-modal [isOpen]="creating" (didDismiss)="creating=false"
+  ><ng-template
+    ><div class="modal-body">
+      <h2>A new shared purpose.</h2>
+      <label class="field"
+        ><span>Committee name</span
+        ><input placeholder="e.g. Student Support" /></label
+      ><label class="field"
+        ><span>Committee head</span
+        ><select aria-label="Select a committee head">
+          <option>Select a head</option>
+          <option>Jamie Santos</option>
+          <option>Morgan Reyes</option>
+        </select></label
+      >
+      <div class="form-actions">
+        <button class="btn secondary" (click)="creating=false">Cancel</button
+        ><button
+          class="btn"
+          (click)="creating=false;dialog='Create committee'"
+        >
+          Create committee
+        </button>
+      </div>
+    </div></ng-template
+  ></ion-modal
+><app-preview-dialog [title]="dialog" (closed)="dialog=''" />

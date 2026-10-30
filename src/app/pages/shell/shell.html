@@ -1,0 +1,77 @@
+<div class="app-layout">
+  <aside class="sidebar">
+    <a class="brand" [routerLink]="['/',role,'home']"
+      ><img src="assets/mark.svg" alt="Committee" /><span
+        >committee<small>Work together. Stay on track.</small></span
+      ></a
+    >
+    <p class="nav-section">WORKSPACE</p>
+    <nav aria-label="Main navigation">
+      @for(item of nav;track item.path){<a
+        class="navlink"
+        [routerLink]="['/',role,item.path]"
+        routerLinkActive="active"
+        ><ion-icon [name]="item.icon" /><span>{{item.label}}</span></a
+      >}
+    </nav>
+    @if(role!=='admin'){
+    <p class="nav-section">YOUR TEAM</p>
+    <a
+      class="navlink"
+      [routerLink]="['/',role,'committees']"
+      routerLinkActive="active"
+      ><ion-icon name="people-outline" /><span>Committees</span></a
+    ><a
+      class="navlink"
+      [routerLink]="['/',role,'sync']"
+      routerLinkActive="active"
+      ><ion-icon name="sync-outline" /><span>Sync</span></a
+    >}
+    <div class="sidebar-bottom">
+      <div class="demo-note">
+        <strong>Preview mode.</strong>Example data only. Changes are not saved.<a
+          class="text-link"
+          routerLink="/welcome"
+          style="margin-top: 9px"
+          >Switch workspace<ion-icon name="arrow-forward-outline"
+        /></a>
+      </div>
+      <a class="user-row" [routerLink]="['/',role,'more']"
+        ><span class="avatar">{{person.initials}}</span>
+        <div>
+          <strong>{{person.name}}</strong><small>{{person.label}}</small>
+        </div></a
+      >
+    </div>
+  </aside>
+  <main class="workspace">
+    <header class="topbar">
+      <a class="brand mobile-brand" [routerLink]="['/',role,'home']"
+        ><img src="assets/mark.svg" alt="" /><span>committee</span></a
+      >
+      <div class="context">
+        <strong>{{role === "admin" ? "Administration workspace" : "Your committee workspace"}}</strong>
+      </div>
+      <div class="topbar-actions">
+        <a
+          class="avatar"
+          [routerLink]="['/',role,'more']"
+          aria-label="Open profile"
+          >{{person.initials}}</a
+        >
+      </div>
+    </header>
+    <ion-content class="screen"
+      ><div class="content-pad"><router-outlet /></div
+    ></ion-content>
+    <nav class="bottom-nav" aria-label="Mobile navigation">
+      @for(item of nav.slice(0,5);track item.path){<a
+        [routerLink]="['/',role,item.path]"
+        routerLinkActive="active"
+        ><ion-icon [name]="item.icon" /><span
+          >{{item.path==='tasks'?'Tasks':item.label}}</span
+        ></a
+      >}
+    </nav>
+  </main>
+</div>
